@@ -2,14 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import dynamic from "next/dynamic";
+import SplineOrVideo from "./components/SplineorVideo";
 
 export default function NutrifyLandingPage() {
   const [open, setOpen] = useState(false);
-  const Spline = dynamic(
-    () => import("@splinetool/react-spline").then((m) => m.default),
-    { ssr: false }
-  );
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -106,9 +102,20 @@ export default function NutrifyLandingPage() {
           {/* HERO */}
           <section id="hero" className="mt-6 sm:mt-10">
             <div className="grid lg:grid-cols-2 gap-8 items-center">
-              <div style={{ height: "100vh" }}>
-                <Spline scene="https://prod.spline.design/cuVGKfXiwOO5r0wQ/scene.splinecode" />
-              </div>
+              <SplineOrVideo
+                splineScene="/scene.spline" 
+                poster="/Image1.jpg"
+                videoMp4="/scene_video.mp4"
+                height={
+                  typeof window === "undefined"
+                    ? "72vh"
+                    : window.innerWidth < 768
+                    ? 420
+                    : "72vh"
+                }
+                className="shadow-xl"
+                unmountWhenHidden
+              />
 
               <div className="text-left py-6 lg:py-12">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg leading-tight">
